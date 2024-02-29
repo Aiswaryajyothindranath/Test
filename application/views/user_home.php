@@ -97,14 +97,34 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");?>
 .signup-form form a:hover {
 	text-decoration: underline;
 }  
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  padding: 8px;
+  background-color: #dddddd;
+}
 </style>
 </head>
 <body>
 <div class="signup-form">
-<h2>Register</h2>
+	<ul>
+  <li><a href="#home">Home</a></li>
+  <li><a href="<?php echo site_url('home/profile');?>">Profile</a></li>
+  <li><a href="<?php echo site_url('welcome/logout');?>">Logout</a></li>
+</ul>
+<h2>Profile</h2>
 
 
-<form role="form" method="post" action="<?php echo site_url('Welcome/signup');?>">
 
 <!-- <?php echo form_open('Signup',['name'=>'userregistration','autocomplete'=>'off']);?>
  --><div class="form-group">
@@ -121,12 +141,12 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");?>
 
 <div class="row">
 <div class="col">
-<?php echo form_input(['name'=>'firstname','class'=>'form-control','value'=>set_value('firstname'),'placeholder'=>'Enter First Name']);?>
+<?php echo form_input(['name'=>'firstname','class'=>'form-control','value'=>$user['first_name']])?>
 <?php echo form_error('firstname',"<div style='color:red'>","</div>");?>
 
 </div>
 <div class="col">
-<?php echo form_input(['name'=>'lastname','class'=>'form-control','value'=>set_value('lastname'),'placeholder'=>'Enter Last Name']);?>
+<?php echo form_input(['name'=>'lastname','class'=>'form-control','value'=>$user['last_name']]);?>
 <?php echo form_error('lastname',"<div style='color:red'>","</div>");?>
 
 </div>
@@ -134,24 +154,24 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");?>
  </div>
         
 <div class="form-group">
-<?php echo form_input(['name'=>'emailid','class'=>'form-control','value'=>set_value('emailid'),'placeholder'=>'Enter your Email id']);?>
+<?php echo form_input(['name'=>'emailid','class'=>'form-control','value'=>$user['email'],]);?>
  <?php echo form_error('emailid',"<div style='color:red'>","</div>");?>       	
  </div>
 
  <div class="form-group">
-<?php echo form_input(['name'=>'dob','type'=>'date','class'=>'form-control','value'=>set_value('dob'),'placeholder'=>'Enter your Email id']);?>
+<?php echo form_input(['name'=>'dob','type'=>'date','class'=>'form-control','value'=>$user['dob']]);?>
  <?php echo form_error('dob',"<div style='color:red'>","</div>");?>  
 
  </div>
 
 <div class="form-group">
-<?php echo form_input(['name'=>'age','class'=>'form-control','value'=>set_value('age'),'placeholder'=>'Enter your Age']);?>
+<?php echo form_input(['name'=>'age','class'=>'form-control','value'=>$user['age']]);?>
  <?php echo form_error('age',"<div style='color:red'>","</div>");?> 
  </div>
 
 <div class="form-group">
 <select class="form-control" name="gender">
-	<option value="">Select your gender</option>
+	<option value=""><?php echo $user['gender'];?></option>
 	  <?php foreach ($genderss as $key =>$gender) { ?>
         <option value="<?php echo $key; ?>"><?php echo $gender ?></option>
     <?php } ?>
@@ -159,7 +179,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");?>
 </div>
 
 <div class="form-group">
-<?php echo form_input(['name'=>'address','class'=>'form-control','value'=>set_value('address'),'placeholder'=>'Enter your Address']);?>
+<?php echo form_input(['name'=>'address','class'=>'form-control','value'=>$user['address']]);?>
  <?php echo form_error('address',"<div style='color:red'>","</div>");?> 
  </div>
 
@@ -180,51 +200,13 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");?>
 </select>
 </div>
 
-<div class="form-group">
-<?php echo form_password(['name'=>'password','class'=>'form-control','value'=>set_value('password'),'placeholder'=>'Password']);?>
- <?php echo form_error('password',"<div style='color:red'>","</div>");?>  
-
-</div>
-<div class="form-group">
-<?php echo form_password(['name'=>'confirmpassword','class'=>'form-control','value'=>set_value('confirmpassword'),'placeholder'=>'Password']);?>
- <?php echo form_error('confirmpassword',"<div style='color:red'>","</div>");?>  
-</div>        
+        
   
-<div class="form-group">
-<?php echo form_submit(['name'=>'insert','value'=>'Submit','class'=>'btn btn-success btn-lg btn-block']);?>
-        </div>
+
     </form>
     <?php echo form_close();?>
-	<div class="text-center">Already have an account? <a href="<?php echo site_url('welcome/index');?>">Sign in</a></div>
 </div>
 </body>
 </html>
 
-<script>
-$(document).ready(function(){
- $('#country').change(function(){
-  var country_id = $('#country').val();
-  if(country_id != '')
-  {
-   $.ajax({
-    url:"http://localhost/test/welcome/fetch_state",
-    method:"POST",
-    data:{country_id:country_id},
-    success:function(data)
-    {
-     $('#state').html(data);
-     $('#city').html('<option value="">Select City</option>');
-    }
-   });
-  }
-  else
-  {
-   $('#state').html('<option value="">Select State</option>');
-   $('#city').html('<option value="">Select City</option>');
-  }
- });
 
-
- 
-});
-</script>
