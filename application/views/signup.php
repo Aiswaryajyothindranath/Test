@@ -207,11 +207,12 @@ $(document).ready(function(){
   if(country_id != '')
   {
    $.ajax({
-    url:"http://localhost/test/welcome/fetch_state",
+    url:"http://localhost/test/index.php/welcome/fetch_state",
     method:"POST",
     data:{country_id:country_id},
     success:function(data)
     {
+    	console.log(data);
      $('#state').html(data);
      $('#city').html('<option value="">Select City</option>');
     }

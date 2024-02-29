@@ -106,11 +106,23 @@ class Welcome extends CI_Controller {
 	}
 
 
-	function fetch_state($country_id)
-	 {
-	  $State_model=$this->load->model('State_model');
-	  $state=$this->State_model->getStates($country_id); 
+	// function fetch_state()
+	//  {
+	//  	$country_id=$this->input->post('country_id');
 
-	  return $state;
-	 }
+	//   // $State_model=$this->load->model('State_model');
+	//   // $state=$this->State_model->getStates($country_id); 
+
+	//   return "hhg";
+	//  }
+
+	  // get state names
+    public function fetch_state() {
+        $json = array();
+        $country_id=$this->input->post('country_id');
+ $State_model=$this->load->model('State_model');
+	 $json=$this->State_model->getStates($country_id);
+        header('Content-Type: application/json');
+        echo json_encode($json);
+    }
 	}
